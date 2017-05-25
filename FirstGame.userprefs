@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{929A6918-FC7E-4B9C-AC1D-1622B720D6A3}|Default">
+  <MonoDevelop.Ide.ItemProperties.FirstGame PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="FirstGame/Model/Enemy2.cs">
+    <Files>
+      <File FileName="FirstGame/Model/Player.cs" Line="12" Column="10" />
+      <File FileName="FirstGame/Controller/Game1.cs" Line="483" Column="4" />
+      <File FileName="FirstGame/View/Animation.cs" Line="123" Column="2" />
+      <File FileName="FirstGame/Program.cs" Line="14" Column="31" />
+      <File FileName="FirstGame/View/ParallaxingBackground.cs" Line="24" Column="38" />
+      <File FileName="FirstGame/Model/Enemy.cs" Line="2" Column="1" />
+      <File FileName="FirstGame/Model/Projectile.cs" Line="67" Column="4" />
+      <File FileName="FirstGame/Model/Projectile2.cs" Line="33" Column="34" />
+      <File FileName="FirstGame/Model/Enemy2.cs" Line="60" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/pbra1484/Documents/Xamarin/FirstGame/FirstGame/Controller/Game1.cs" relfile="FirstGame/Controller/Game1.cs" line="47" column="1" />
+      <Breakpoint file="/Users/pbra1484/Documents/Xamarin/FirstGame/FirstGame/Controller/Game1.cs" relfile="FirstGame/Controller/Game1.cs" line="43" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
