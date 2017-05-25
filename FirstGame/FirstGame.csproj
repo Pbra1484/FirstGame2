@@ -47,6 +47,7 @@
     <Compile Include="Model\Projectile.cs" />
     <Compile Include="Model\Projectile2.cs" />
     <Compile Include="Model\Enemy2.cs" />
+    <Compile Include="Model\Projectile3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
