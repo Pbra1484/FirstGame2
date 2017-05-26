@@ -26,6 +26,9 @@ namespace FirstGame.Controller
 		Texture2D projectile2Texture;
 		List<Projectile2> projectiles2;
 
+		Texture2D projectile3Texture;
+		List<Projectile3> projectiles3;
+
 		// The rate of fire of the player laser
 		TimeSpan fireTime;
 		TimeSpan previousFireTime;
@@ -33,6 +36,9 @@ namespace FirstGame.Controller
 		// The rate of fire of the player laser
 		TimeSpan fireTime2;
 		TimeSpan previousFireTime2;
+
+		TimeSpan fireTime3;
+		TimeSpan previousFireTime3;
 
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
@@ -135,10 +141,14 @@ namespace FirstGame.Controller
 
 			projectiles2 = new List<Projectile2>();
 
+			projectiles3 = new List<Projectile3>();
+
 			// Set the laser to fire every quarter second
 			fireTime = TimeSpan.FromSeconds(.15f);
 
 			fireTime2 = TimeSpan.FromSeconds(1f);
+
+			fireTime3 = TimeSpan.FromSeconds(5f);
 
 			explosions = new List<Animation>();
 
@@ -173,6 +183,7 @@ namespace FirstGame.Controller
 
 			projectileTexture = Content.Load<Texture2D>("Texture/laser");
 			projectile2Texture = Content.Load<Texture2D>("Texture/bullet");
+			projectile3Texture = Content.Load<Texture2D>("Texture/projectile");
 			explosionTexture = Content.Load<Texture2D>("Animation/explosion");
 			// Load the music
 			gameplayMusic = Content.Load<Song>("Sound/gameMusic");
@@ -233,6 +244,8 @@ namespace FirstGame.Controller
 			// Update the projectiles
 			UpdateProjectiles2();
 
+			UpdateProjectiles3();
+
 			// Update the explosions
 			UpdateExplosions(gameTime);
 
@@ -254,6 +267,13 @@ namespace FirstGame.Controller
 			Projectile2 projectile = new Projectile2();
 			projectile.Initialize(GraphicsDevice.Viewport, projectile2Texture, position);
 			projectiles2.Add(projectile);
+		}
+
+		private void AddProjectile3(Vector2 position)
+		{
+			Projectile3 projectile = new Projectile3();
+			projectile.Initialize(GraphicsDevice.Viewport, projectile3Texture, position);
+			projectiles3.Add(projectile);
 		}
 
 		private void UpdatePlayer(GameTime gameTime)
@@ -312,6 +332,16 @@ namespace FirstGame.Controller
 				// Play the laser sound
 			}
 
+			if (gameTime.TotalGameTime - previousFireTime3 > fireTime3 && currentKeyboardState.IsKeyDown(Keys.B))
+			{
+				// Reset our current time
+				previousFireTime3 = gameTime.TotalGameTime;
+
+				// Add the projectile, but add it to the front and center of the player
+				AddProjectile3(player.Position + new Vector2(player.Width / 2, 0));
+				// Play the laser sound
+			}
+
 			// reset score if player health goes to zero
 			if (player.Health <= 0)
 			{
@@ -345,6 +375,21 @@ namespace FirstGame.Controller
 				if (projectiles2[i].Active == false)
 				{
 					projectiles2.RemoveAt(i);
+				}
+
+			}
+		}
+
+		private void UpdateProjectiles3()
+		{
+			// Update the Projectiles
+			for (int i = projectiles3.Count - 1; i >= 0; i--)
+			{
+				projectiles3[i].Update();
+
+				if (projectiles3[i].Active == false)
+				{
+					projectiles3.RemoveAt(i);
 				}
 
 			}
@@ -385,6 +430,11 @@ namespace FirstGame.Controller
 			for (int i = 0; i < projectiles2.Count; i++)
 			{
 				projectiles2[i].Draw(spriteBatch);
+			}
+
+			for (int i = 0; i < projectiles3.Count; i++)
+			{
+				projectiles3[i].Draw(spriteBatch);
 			}
 
 			// Draw the Player
@@ -672,6 +722,50 @@ namespace FirstGame.Controller
 					{
 						enemies2[j].Health -= projectiles2[i].Damage;
 						projectiles2[i].Active = false;
+					}
+				}
+			}
+
+			for (int i = 0; i < projectiles3.Count; i++)
+			{
+				for (int j = 0; j < enemies.Count; j++)
+				{
+					// Create the rectangles we need to determine if we collided with each other
+					rectangle1 = new Rectangle((int)projectiles3[i].Position.X -
+					projectiles3[i].Width / 2, (int)projectiles3[i].Position.Y -
+					projectiles3[i].Height / 2, projectiles3[i].Width, projectiles3[i].Height);
+
+					rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2,
+					(int)enemies[j].Position.Y - enemies[j].Height / 2,
+					enemies[j].Width, enemies[j].Height);
+
+					// Determine if the two objects collided with each other
+					if (rectangle1.Intersects(rectangle2))
+					{
+						enemies[j].Health -= projectiles3[i].Damage;
+						projectiles3[i].Active = false;
+					}
+				}
+			}
+
+			for (int i = 0; i < projectiles3.Count; i++)
+			{
+				for (int j = 0; j < enemies2.Count; j++)
+				{
+					// Create the rectangles we need to determine if we collided with each other
+					rectangle1 = new Rectangle((int)projectiles3[i].Position.X -
+					projectiles3[i].Width / 2, (int)projectiles3[i].Position.Y -
+					projectiles3[i].Height / 2, projectiles3[i].Width, projectiles3[i].Height);
+
+					rectangle2 = new Rectangle((int)enemies2[j].Position.X - enemies2[j].Width / 2,
+					(int)enemies2[j].Position.Y - enemies2[j].Height / 2,
+					enemies2[j].Width, enemies2[j].Height);
+
+					// Determine if the two objects collided with each other
+					if (rectangle1.Intersects(rectangle2))
+					{
+						enemies2[j].Health -= projectiles3[i].Damage;
+						projectiles3[i].Active = false;
 					}
 				}
 			}
